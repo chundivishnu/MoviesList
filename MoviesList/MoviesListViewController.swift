@@ -8,13 +8,16 @@
 
 import UIKit
 
-class MoviesListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class MoviesListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
-    @IBOutlet var searchTextField: UITextField!
-    @IBOutlet var submitButton: UIButton!
     @IBOutlet var moviesTableView: UITableView!
     
+    var searchController: UISearchController!
+    var resultsController = UIViewController()
+    
+    //API Key generated in Movies DB API Portal
     let apiKey = "ffea4438a4ff5ddf2386e5189be357cb"
+    
     var pageNumber = 1
     var totalPages: Int = 0
     var searchText = ""
@@ -23,14 +26,16 @@ class MoviesListViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.searchController = UISearchController(searchResultsController: self.resultsController)
+        self.searchController.searchBar.delegate = self
+        self.searchController.dimsBackgroundDuringPresentation = false
+        self.searchController.searchBar.placeholder = "Search a Movie"
+        
+        self.moviesTableView.tableHeaderView = self.searchController.searchBar
         self.moviesTableView.tableFooterView = UIView(frame: CGRect.zero)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
+    //MARK:- UITableViewDataSource Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return moviesList.count;
     }
@@ -44,21 +49,18 @@ class MoviesListViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell
     }
     
+    //MARK:- UITableViewDelegate Methods
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "showDetail", sender: self.moviesList[indexPath.row])
     }
     
-    @IBAction func didTapOnSubmitButton(_ sender: UIButton) {
-        self.view.endEditing(true)
-        self.resetTheValuesForNewSearch()
-        self.getMoviesList(movieName: searchText, page: pageNumber)
-    }
-    
+    //MARK: Reset the values
     func resetTheValuesForNewSearch() {
         self.moviesList.removeAll()
         pageNumber = 1
     }
     
+    //MARK:- getMoviesList by using search string
     func getMoviesList(movieName: String, page: Int) {
         let headers = [
             "content-type": "application/json",
@@ -80,7 +82,10 @@ class MoviesListViewController: UIViewController, UITableViewDelegate, UITableVi
                         let result = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String : Any]
                         let resultArray = result["results"] as! [Any]
                         self.totalPages = result["total_pages"] as! Int
+                        
+                        //Append the new list of Movies from next page of data
                         self.moviesList += resultArray
+                        
                         DispatchQueue.main.async {
                             if self.moviesList.count == 0 {
                                 self.moviesList.append("No results found")
@@ -97,16 +102,22 @@ class MoviesListViewController: UIViewController, UITableViewDelegate, UITableVi
         dataTask.resume()
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        searchText = searchTextField.text!
+    //MARK:- UISearchBarDelegate Methods
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchText = searchBar.text!
+        self.resetTheValuesForNewSearch()
+        self.getMoviesList(movieName: searchBar.text!, page: pageNumber)
+        self.searchController.isActive = false
     }
     
+    //MARK:- UIScrollViewDelegate Methods
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollOffset : CGFloat = scrollView.contentOffset.y
         let scrollHeight : CGFloat = scrollView.frame.size.height
         
         let scrollContentSizeHeight : CGFloat = scrollView.contentSize.height + scrollView.contentInset.bottom
         
+        //Scroll reaches bottom start lazy loading the values
         if scrollOffset + scrollHeight == scrollContentSizeHeight && pageNumber != totalPages
         {
             pageNumber += 1

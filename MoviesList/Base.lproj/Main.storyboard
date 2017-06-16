@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="QMM-9C-Uc8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="QMM-9C-Uc8">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,24 +22,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search a movie" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="7xN-kr-uxX">
-                                <rect key="frame" x="16" y="74" width="290" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="AYs-LG-85X"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JAA-tm-pWQ">
-                                <rect key="frame" x="316" y="74" width="49" height="30"/>
-                                <state key="normal" title="Submit"/>
-                                <connections>
-                                    <action selector="didTapOnSubmitButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xK5-vO-fpQ"/>
-                                </connections>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JIJ-0i-DxD">
-                                <rect key="frame" x="0.0" y="109" width="375" height="558"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellID" id="hee-qU-IAe">
@@ -59,22 +43,15 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="JAA-tm-pWQ" secondAttribute="trailing" constant="10" id="0Bh-h4-UmE"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="7xN-kr-uxX" secondAttribute="leading" id="3it-Yq-E07"/>
-                            <constraint firstItem="7xN-kr-uxX" firstAttribute="trailing" secondItem="JAA-tm-pWQ" secondAttribute="leading" constant="-10" id="5Qn-ZB-fR8"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JIJ-0i-DxD" secondAttribute="bottom" id="8hW-e2-pWV"/>
-                            <constraint firstItem="JIJ-0i-DxD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="AI8-Nk-J41"/>
-                            <constraint firstItem="JIJ-0i-DxD" firstAttribute="top" secondItem="7xN-kr-uxX" secondAttribute="bottom" constant="5" id="Aam-Km-mPE"/>
-                            <constraint firstItem="JAA-tm-pWQ" firstAttribute="centerY" secondItem="7xN-kr-uxX" secondAttribute="centerY" id="Qpa-Ct-iKC"/>
-                            <constraint firstItem="7xN-kr-uxX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="VMd-wo-grA"/>
-                            <constraint firstAttribute="trailing" secondItem="JIJ-0i-DxD" secondAttribute="trailing" id="ZHz-3P-aKs"/>
+                            <constraint firstAttribute="trailing" secondItem="JIJ-0i-DxD" secondAttribute="trailing" id="2sz-Ah-HcP"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JIJ-0i-DxD" secondAttribute="bottom" id="DDu-MT-DI3"/>
+                            <constraint firstItem="JIJ-0i-DxD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="IYv-tO-m6b"/>
+                            <constraint firstItem="JIJ-0i-DxD" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-64" id="wFl-Kx-NI4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Movies List" id="Y2p-1Q-T0e"/>
                     <connections>
                         <outlet property="moviesTableView" destination="JIJ-0i-DxD" id="yaO-7b-i4b"/>
-                        <outlet property="searchTextField" destination="7xN-kr-uxX" id="5oh-bo-aOi"/>
-                        <outlet property="submitButton" destination="JAA-tm-pWQ" id="wRV-lm-fub"/>
                         <segue destination="MKj-Xk-1CO" kind="push" identifier="showDetail" id="aGT-Ua-xFv"/>
                     </connections>
                 </viewController>
